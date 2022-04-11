@@ -52,7 +52,8 @@ namespace _220411
             {
                 byte[] B = U.Receive(ref EP);
                 string A = Encoding.Default.GetString(B); //翻譯陣列為字串A
-                String[] Q = A.Split('/');
+                string[] Z = A.Split('_');
+                String[] Q = Z[1].Split('/');
                 Point[] R = new Point[Q.Length];
                 for(int i = 0;i < Q.Length ; i++)
                 {
@@ -68,6 +69,22 @@ namespace _220411
                     L.StartPoint = R[i];
                     L.EndPoint = R[i + 1];
                     L.Parent = D;
+
+                    switch (Z[0])
+                    {
+                        case "1":
+                            L.BorderColor = Color.Red;
+                            break;
+                        case "2":
+                            L.BorderColor = Color.Green;
+                            break;
+                        case "3":
+                            L.BorderColor = Color.Blue;
+                            break;
+                        case "4":
+                            L.BorderColor = Color.Black;
+                            break;
+                    }
 
                 }
             }
@@ -113,6 +130,24 @@ namespace _220411
                 LineShape L = new LineShape(); //建立線段物件
                 L.StartPoint = stP; //線段起點
                 L.EndPoint = e.Location; //線段終點
+
+                if (radioButton_red.Checked)
+                {
+                    L.BorderColor = Color.Red;
+                }
+                if (radioButton_green.Checked)
+                {
+                    L.BorderColor = Color.Green;
+                }
+                if (radioButton_blue.Checked)
+                {
+                    L.BorderColor = Color.Blue;
+                }
+                if (radioButton_black.Checked)
+                {
+                    L.BorderColor = Color.Black;
+                }
+
                 L.Parent = C; //線段加入畫布C
                 stP = e.Location; //終點變起點
                 p += "/" + stP.X.ToString() + "," + stP.Y.ToString(); //持續記錄座標
@@ -124,6 +159,27 @@ namespace _220411
         {
             int Port = int.Parse(textBox_Port.Text);
             UdpClient S = new UdpClient(textBox_IP.Text, Port);
+
+
+            if (radioButton_red.Checked)
+            {
+                p = "1_" + p;
+            }
+            if (radioButton_green.Checked)
+            {
+                p = "2_" + p;
+            }
+            if (radioButton_blue.Checked)
+            {
+                p = "3_" + p;
+            }
+            if (radioButton_black.Checked)
+            {
+                p = "4_" + p;
+            }
+
+
+
             byte[] B = Encoding.Default.GetBytes(p);
             S.Send(B, B.Length);
             S.Close();
