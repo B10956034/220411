@@ -56,13 +56,13 @@ namespace _220411
                 Point[] R = new Point[Q.Length];
                 for(int i = 0;i < Q.Length ; i++)
                 {
-                    string[] K = Q[i].Split('/');
+                    string[] K = Q[i].Split(',');
                     R[i].X = int.Parse(K[0]);
                     R[i].Y = int.Parse(K[1]);
 
                 }
 
-                for(int i = 0; i < Q.Length; i++)
+                for(int i = 0; i < Q.Length - 1; i++)
                 {
                     LineShape L = new LineShape();
                     L.StartPoint = R[i];
